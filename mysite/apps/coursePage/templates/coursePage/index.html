@@ -1,0 +1,359 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'coursePage/style.css' %}">
+    <title>coursePage</title>
+    <style>
+        /* Generals resets and unimportant stuff */
+body {
+	background: #eaebec;
+}
+/* --- Product Card ---- */
+.make-3D-space{
+    position: relative;
+    float: right;
+    width:1320px;
+    height:500px;
+    transform-style: preserve-3d;
+    transition: transform 5s;
+    position:relative;
+    top:80px;
+    margin-left:0;
+    display: inline-block;
+}
+#product-front{
+	width:1315px;
+	height:500px;
+	background:#fff;
+	position:relative;
+	left:-5px;
+	top:-5px;
+	-webkit-transition: all 100ms ease-out;
+       -moz-transition: all 100ms ease-out;
+         -o-transition: all 100ms ease-out;
+            transition: all 100ms ease-out;
+}
+#product-card.animate #product-front{
+	top:0px;
+	left:0px;
+	-webkit-transition: all 100ms ease-out;
+       -moz-transition: all 100ms ease-out;
+         -o-transition: all 100ms ease-out;
+            transition: all 100ms ease-out;
+}
+#product-card{
+	width:1305px;
+	height:490px;
+	position:relative;
+	top:10px;
+	left:10px;
+	overflow:hidden;
+    transform-style: preserve-3d;
+	-webkit-transition:  100ms ease-out;
+       -moz-transition:  100ms ease-out;
+         -o-transition:  100ms ease-out;
+            transition:  100ms ease-out;
+}
+#product-card.animate{
+	top:5px;
+	left:5px;
+	width:1315px;
+	height:500px;
+	box-shadow:0px 13px 21px -5px rgba(0, 0, 0, 0.3);
+	-webkit-transition:  100ms ease-out;
+       -moz-transition:  100ms ease-out;
+         -o-transition:  100ms ease-out;
+            transition:  100ms ease-out;
+}
+.stats-container{
+	background:#fff;
+	position:absolute;
+	top:420px;
+	left:0;
+	width:1315px;
+	height:500px;
+	padding:27px 35px 35px;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+#product-card.animate .stats-container{
+	top:150px;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+.stats-container .product_name{
+	font-size:22px;
+	color:#393c45;
+}
+.stats-container p{
+	font-size:16px;
+	color:#b1b1b3;
+	padding:2px 0 20px 0;
+}
+.stats-container .product_price{
+	float:right;
+	color:#48cfad;
+	font-size:22px;
+	font-weight:600;
+}
+.image_overlay{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#48daa1;
+	opacity:0;
+}
+#product-card.animate .image_overlay{
+	opacity:0.7;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+.product-options{
+	padding:2px 0 0;
+}
+.product-options strong{
+	font-weight:700;
+	color:#393c45;
+	font-size:14px;
+}
+.product-options span{
+	color:#969699;
+	font-size:14px;
+	display:block;
+	margin-bottom:8px;
+}
+#view_details{
+	position:absolute;
+	top:25px;
+	margin-left:-85px;
+	border:2px solid #fff;
+	color:#fff;
+	font-size:19px;
+	text-align:center;
+	text-transform:uppercase;
+	font-weight:700;
+	padding:10px 0;
+	width:172px;
+	opacity:0;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+#view_details.oneM{
+  left:12%;
+}
+#view_details.threeM{
+  left:37%;
+}
+#view_details.sixM{
+  left:62%;
+}
+#view_details.twelveM{
+  left:87%;
+}
+#view_details:hover{
+	background:#fff;
+	color:#48cfad;
+	cursor:pointer;
+}
+#product-card.animate #view_details{
+	opacity:1;
+	width:152px;
+	font-size:15px;
+	margin-left:-75px;
+	top:50px;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+div.colors div{
+	margin-top:3px;
+	width:15px;
+	height:15px;
+	margin-right:5px;
+	float:left;
+}
+div.shadow{
+	width:335px;height:520px;
+	opacity:0;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:3;
+	display:none;
+	background: -webkit-linear-gradient(left,rgba(0,0,0,0.1),rgba(0,0,0,0.2));
+    background: -o-linear-gradient(right,rgba(0,0,0,0.1),rgba(0,0,0,0.2));
+    background: -moz-linear-gradient(right,rgba(0,0,0,0.1),rgba(0,0,0,0.2));
+    background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+}
+
+.submit{
+	position:absolute;
+	top:112px;
+	left:50%;
+	margin-left:-85px;
+	border:2px solid #fff;
+	color:#fff;
+	font-size:19px;
+	text-align:center;
+	text-transform:uppercase;
+	font-weight:700;
+	padding:10px 0;
+	width:172px;
+	opacity:0;
+    visibility: hidden;
+	-webkit-transition: all 200ms ease-out;
+       -moz-transition: all 200ms ease-out;
+         -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+}
+.submit:hover{
+	background:#fff;
+	color:#48cfad;
+	cursor:pointer;
+}
+    </style>
+</head>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">SPMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="/coursePage">Courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/compPage">Competitions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/partyPage">Organise Party</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/suggestionPortal">Suggestions</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav nav justify-content-end">
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/login/logout">Logout</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/login">Login</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/userPortal">Hello, {{ request.user.username }}</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/signUp">Sign-Up</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+    </nav>   <!-- navbar ends -->
+
+
+  <div class="container">
+    <div class="row row-cols-1">
+      {% for course in courses %}
+        <div class="col d-flex justify-content-center">
+          <div id="make-3D-space" class="make-3D-space">
+            <div id="product-card" class="product-card">
+              <div id="product-front">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/t-shirt.png" alt="" />
+                <div class="image_overlay"></div>
+                  <a href="register?course={{ course.name }}&duration=3">
+                    <div id="view_details" class="view_details oneM">
+                      3 Month
+                    </div>
+                  </a>
+                  <a href="register?course={{ course.name }}&duration=6">
+                    <div id="view_details" class="view_details threeM">
+                      6 Months
+                    </div>
+                  </a>
+                  <a href="register?course={{ course.name }}&duration=12">
+                    <div id="view_details" class="view_details sixM">
+                      12 Months
+                    </div>
+                  </a>
+                  <a href="/suggestionPortal?area={{ course.name }}">
+                    <div id="view_details" class="view_details twelveM">
+                      Complain
+                    </div>
+                  </a>
+                <div class="stats">
+                  <div class="stats-container">
+                    <span class="product_price">{{ course.num_students }}</span>
+                    <span class="product_name">{{ course.name }}</span>
+                    <div class="product-options mt-2">
+                      <strong>AGE-GROUP</strong>
+                      <span>8-20</span>
+                      <strong>COORDINATOR</strong>
+                      {% for coo in course.newuser_set.all %}
+                        <!-- {% if coo.type == "COORDINATOR" %} -->
+                          <span>{{ coo.username }}</span>
+                          <span>{{ coo.gender }}</span>
+                        <!-- {% endif %} -->
+                      {% endfor %}
+                      <strong>Slots</strong>
+
+                      {% for slot in course.slot_set.all %}
+                        <span>{{ slot.from_time }} - {{ slot.to_time }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+      $(document).ready(function(){
+	// Lift card and show stats on Mouseover
+	$('.product-card').hover(function(){
+			$(this).addClass('animate');
+			$('div.carouselNext, div.carouselPrev').addClass('visible');
+		 }, function(){
+			$(this).removeClass('animate');
+			$('div.carouselNext, div.carouselPrev').removeClass('visible');
+	});
+		{#$('.view_details').click(function(){#}
+		{#    window.location.href = "/login";#}
+		//{#});#}
+  });
+  </script>
+</body>
+</html>

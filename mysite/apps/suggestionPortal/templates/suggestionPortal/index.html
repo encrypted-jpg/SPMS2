@@ -1,0 +1,243 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+      	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <title>Suggestion Portal</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">SPMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/coursePage">Courses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/compPage">Competitions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/partyPage">Organise Party</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="/suggestionPortal">Suggestions</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav nav justify-content-end">
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/login/logout">Logout</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/login">Login</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/userPortal">Hello, {{ request.user.username }}</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/signUp">Sign-Up</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+    </nav>   <!-- navbar ends -->
+    <div class="container-contact100">
+		<div class="wrap-contact100 mt-5">
+			<form class="contact100-form validate-form">
+				<span class="contact100-form-title">
+					Raise an Issue/ Give Suggestion
+				</span>
+
+				<div class="wrap-input100 validate-input" data-validate="Name is required">
+					<span class="label-input100">Name of Your Issue</span>
+					<input class="input100" type="text" name="name" placeholder="Name of Your Issue">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate = "An Area is Required">
+					<span class="label-input100">Course/Competition/Event/Other (Please Specify)</span>
+					<input class="input100" type="text" name="area" placeholder="Specify the Area of Issue" value="{{ area }}">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Responsible Person</span>
+					<div>
+						<select class="selection-2" name="service">
+                            <option>{{ coorName }}</option>
+                            {% for mem in users %}
+                                {% if mem.username != coorName %}
+							<option>{{ mem.username }}</option>
+                                {% endif %}
+                            {% endfor %}
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+					<span class="label-input100">Describe</span>
+					<textarea class="input100" name="message" placeholder="Describe here...."></textarea>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-contact100-form-btn">
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn">
+							<span>
+								Submit
+								<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script>
+
+(function ($) {
+    "use strict";
+
+
+    /*==================================================================
+    [ Focus Contact2 ]*/
+    $('.input100').each(function(){
+        $(this).on('blur', function(){
+            if($(this).val().trim() != "") {
+                $(this).addClass('has-val');
+            }
+            else {
+                $(this).removeClass('has-val');
+            }
+        })
+    })
+
+
+    /*==================================================================
+    [ Validate ]*/
+    var name = $('.validate-input input[name="name"]');
+    var email = $('.validate-input input[name="area"]');
+    var message = $('.validate-input textarea[name="message"]');
+
+
+    $('.validate-form').on('submit',function(){
+        var check = true;
+
+        if($(name).val().trim() == ''){
+            showValidate(name);
+            check=false;
+        }
+
+
+        if($(email).val().trim() == '') {
+            showValidate(email);
+            check=false;
+        }
+
+        if($(message).val().trim() == ''){
+            showValidate(message);
+            check=false;
+        }
+
+        return check;
+    });
+
+
+    $('.validate-form .input100').each(function(){
+        $(this).focus(function(){
+           hideValidate(this);
+       });
+    });
+
+    function showValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).addClass('alert-validate');
+    }
+
+    function hideValidate(input) {
+        var thisAlert = $(input).parent();
+
+        $(thisAlert).removeClass('alert-validate');
+    }
+
+
+
+})(jQuery);
+    </script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

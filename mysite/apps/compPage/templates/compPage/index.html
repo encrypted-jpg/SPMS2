@@ -1,0 +1,365 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://kit.fontawesome.com/bdd89edb33.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Competitions</title>
+      <style>
+          .u-center-text {
+  text-align: center !important;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #fff;
+  background: #eaebec;
+}
+
+.heading-secondary {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: transparent;
+  letter-spacing: 0.2rem;
+  line-height: 1;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  color: #070707;
+}
+
+.btn, .btn:link, .btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border-radius: 0.5rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 1.6rem;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover::after {
+  -webkit-transform: scaleX(1.4) scaleY(1.6);
+          transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn:active, .btn:focus {
+  outline: none;
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.btn--white {
+  background-color: #fff;
+  color: #777;
+}
+
+.btn--white::after {
+  background-color: #fff;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+html{
+    font-size: 62.5%;
+}
+.navbar{
+    font-size: 180%;
+}
+
+body {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.section-plans {
+  background: #eaebec;
+  padding: 4rem 0 4rem 0;
+}
+
+.card {
+  -webkit-perspective: 150rem;
+          perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  height: 52rem;
+}
+
+.card__side {
+  height: 52rem;
+  -webkit-transition: all 0.8s ease;
+  transition: all 0.8s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-radius: 3px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+.card__side--front {
+  background-color: #fff;
+}
+
+.card__side--front {
+  background: linear-gradient(-45deg, #f403d1, #64b5f6);
+}
+
+.card__side--back {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+.card__side--back {
+  background: linear-gradient(-45deg, #64b5f6, #f403d1);
+}
+
+.card:hover .card__side--front {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.card:hover .card__side--back {
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0);
+}
+
+.card__title {
+  height: 20rem;
+  padding: 4rem 2rem 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card__title .fas {
+  font-size: 0rem;
+}
+
+.card__heading {
+  font-size: 3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  width: 75%;
+}
+
+.card__details {
+  padding: 0 2rem 2rem;
+}
+
+.card__details ul {
+  list-style: none;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card__details ul li {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+.card__details ul li:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.card__cta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 90%;
+  text-align: center;
+}
+
+.card__price-box {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 8rem;
+}
+
+.card__price-only {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+
+.card__price-value {
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.row {
+  max-width: 114rem;
+  margin: 0 auto;
+}
+
+.row:not(:last-child) {
+  margin-bottom: 5rem;
+  margin-top: 5rem;
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.row [class^="col-"] {
+  float: left;
+}
+
+.row [class^="col-"]:not(:last-child) {
+  margin-right: 6rem;
+}
+
+.row .col-1-of-3 {
+  width: calc((100% - 2 * 6rem) / 3);
+}
+
+      </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">SPMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/coursePage">Courses</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="/compPage">Competitions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/partyPage">Organise Party</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/suggestionPortal">Suggestions</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav nav justify-content-end">
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/login/logout">Logout</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/login">Login</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              {% if request.user != null and request.user.username != "" %}
+                <a class="nav-link" aria-current="page" href="/userPortal">Hello, {{ request.user.username }}</a>
+              {% else %}
+                <a class="nav-link" aria-current="page" href="/signUp">Sign-Up</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+    </nav>   <!-- navbar ends -->
+    <section class="section-plans" id="section-plans">
+      <div class="u-center-text u-margin-bottom-big mt-5">
+        <h2 class="heading-secondary">
+          Competitions
+        </h2>
+      </div>
+    <div class="row">
+      {% for comp, games, slot in data %}
+        <div class="col-1-of-3">
+          <div class="card">
+            <div class="card__side card__side--front">
+              <div class="card__title card__title">
+                <i class="fas fa-paper-plane"></i>
+                <h4 class="card__heading">{{ comp.name }}</h4>
+              </div>
+
+              <div class="card__details">
+                <ul>
+                    {% for game in games %}
+                        <li>{{ game }}</li>
+                    {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="card__side card__side--back card__side--back">
+              <div class="card__cta">
+                <div class="card__price-box">
+                  <p class="card__price-only">Timings</p>
+                  <p class="card__price-value">{{ slot.from_time }} to {{ slot.to_time }} on {{ slot.Date }}</p>
+                </div>
+                <a href="/compPage/participate?comp={{ comp.id }}" class="btn btn--white">Participate</a>
+                  <p></p>
+                  <a href="/compPage/ticket?comp={{ comp.id }}" class="btn btn--white">Book a Ticket</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+{#      <div class="u-center-text u-margin-top-huge">#}
+{#        <a href="#" class="btn btn--green">Get Started</a>#}
+{#      </div>#}
+
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

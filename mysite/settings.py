@@ -24,11 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "ozx0wn!i+lxici@v_x=d_8q!qf1epir)ru1et%sgy$bmcz&khf"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # AUTH_USER_MODEL = "mysite.NewUser"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://spms007.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -56,6 +56,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -137,3 +138,5 @@ MEDIA_ROOT = str(BASE_DIR) + "/apps/userPortal/data"
 MEDIA_URL = "/files/"
 
 STATIC_URL = "/static/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

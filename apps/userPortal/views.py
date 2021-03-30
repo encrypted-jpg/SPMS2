@@ -237,11 +237,16 @@ def confirmMembership(request):
 
 
 def course(request):
-    USER = NewUser.objects.get(username=request.user.username)
-    context = {
-        "USER": USER,
-    }
-    return render(request, "userPortal/course.html", context)
+    if request.user is not None and request.user.username is not "":
+        USER = NewUser.objects.get(username=request.user.username)
+        courses = USER.course.all()
+        context = {
+            "USER": USER,
+            "courses": courses,
+        }
+        return render(request, "userPortal/course.html", context)
+    else:
+        return redirect("/login")
 
 
 def comp(request):

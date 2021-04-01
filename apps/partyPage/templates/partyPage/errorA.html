@@ -16,7 +16,7 @@
     <title>Organize Party</title>
   </head>
   <body>
-
+      
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="/">SPMS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,56 +57,7 @@
         </div>
     </nav>   <!-- navbar ends -->
 
-    <div class="wrapper" style="background: #74cfbf;">
-			<div class="inner">
-				<div class="image-holder">
-					<img src="../../static/party_images/image1.jpg" alt="">
-				</div>
-				<form method="POST">
-          {% csrf_token %}
-					<h3>Registration Form</h3>
-					<div class="form-group">
-						<input name="first_name" type="text" placeholder="{{ request.user.first_name }}" class="form-control" readonly required="required">
-						<input name="last_name" type="text" placeholder="{{ request.user.last_name }}" class="form-control" readonly required="required">
-					</div>
-					<div class="form-wrapper">
-						<input name="phone_number" type="tel" placeholder="Phone number Eg: 123-456-7899" class="form-control" required="required" pattern="^\d{3}-\d{3}-\d{4}$">
-					</div>
-					<div class="form-wrapper">
-						<input name ="aadhar_number" type="number" placeholder="Aadhar Card Number" class="form-control" required="required" pattern="^\d{12}$">
-					</div>
-					<div class="form-wrapper">
-						<select name="" id="" class="form-control">
-							<option disabled selected>Select date</option>
-              {% for slot in events2 %}
-                <option name="slot_date">{{ slot.Date }}</option>
-              {% endfor %}
-						</select>
-					</div>
-          <br>
-          <div class="form-group">
-						<input name="start_time" type="time" placeholder="From (Eg: 18:30) " class="form-control" required="required" min="18:00" max="21:30">
-						<input name="end_time" type="time" placeholder="To (Eg: 20:30) " class="form-control" required="required" min="19:00" max="22:30">
-					</div>
-          <br>
-					<div class="form-wrapper">
-						<select name="" id="" class="form-control">
-							<option value="" disabled selected>Coordinator list</option>
-              {% for obj in coord %}
-                <option name="coordinator_name">{{obj.username}}</option>
-              {% endfor %}
-						</select>
-					</div>
-          <div class="form-wrapper">
-            Maximum Number of people allowed: 150 <br>
-            Party timings can only be from 6 PM to upto 10:30 PM.
-          </div>
-					<button type = "Submit">Register
-						<i class="zmdi zmdi-arrow-right"></i>
-					</button>
-				</form>
-			</div>
-		</div>
+    Apologies for the inconvenience, but we are fully booked for this month.
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

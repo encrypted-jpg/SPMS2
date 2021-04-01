@@ -50,49 +50,51 @@ def slots(request):
 
 
 def availableSlots(request):
-    monday_slots = Memberslot.objects.filter(Day="Monday").exclude(
-        rem_num_participants=0
-    )
-    tuesday_slots = Memberslot.objects.filter(Day="Tuesday").exclude(
-        rem_num_participants=0
-    )
-    wednesday_slots = Memberslot.objects.filter(Day="Wednesday").exclude(
-        rem_num_participants=0
-    )
-    thursday_slots = Memberslot.objects.filter(Day="Thursday").exclude(
-        rem_num_participants=0
-    )
-    saturday_slots = Memberslot.objects.filter(Day="Saturday").exclude(
-        rem_num_participants=0
-    )
-    friday_slots = Memberslot.objects.filter(Day="Friday").exclude(
-        rem_num_participants=0
-    )
-    sunday_slots = Memberslot.objects.filter(Day="Sunday").exclude(
-        rem_num_participants=0
-    )
-    USER = NewUser.objects.get(username=request.user.username)
-    slots = USER.slot_set.filter(type="MEMBERSLOT")
-    for idx in slots:
-        monday_slots = monday_slots.exclude(id=idx.id)
-        tuesday_slots = tuesday_slots.exclude(id=idx.id)
-        wednesday_slots = wednesday_slots.exclude(id=idx.id)
-        thursday_slots = thursday_slots.exclude(id=idx.id)
-        friday_slots = friday_slots.exclude(id=idx.id)
-        saturday_slots = saturday_slots.exclude(id=idx.id)
-        sunday_slots = sunday_slots.exclude(id=idx.id)
-    context = {
-        "slots": slots,
-        "monday_slots": monday_slots,
-        "tuesday_slots": tuesday_slots,
-        "wednesday_slots": wednesday_slots,
-        "thursday_slots": thursday_slots,
-        "friday_slots": friday_slots,
-        "saturday_slots": saturday_slots,
-        "sunday_slots": sunday_slots,
-        "USER": USER,
-    }
-    return render(request, "userPortal/availableSlots.html", context)
+    if request.user is not None and request.user.username is not "":
+        USER = NewUser.objects.get(username=request.user.username)
+        if request.GET.get("add") is "0":
+            SLOT = Memberslot.objects.get(id=request.GET.get("id"))
+            SLOT.rem_num_participants = SLOT.rem_num_participants+1
+            SLOT.users.remove(USER)
+            print(request.GET.get("add"), request.GET.get("id"), SLOT)
+        elif request.GET.get("add") is "1":
+            print("YO", USER.slot_set.filter(type="MEMBERSLOT"))
+            SLOT = Memberslot.objects.get(id=request.GET.get("id"))
+            SLOT.rem_num_participants = SLOT.rem_num_participants-1
+            SLOT.users.add(USER)
+            SLOT.save()
+            print(USER.slot_set.filter(type="MEMBERSLOT"))
+            print(request.GET.get("add"), request.GET.get("id"), SLOT)
+        monday_slots = Memberslot.objects.filter(Day="Monday").exclude(rem_num_participants="0")
+        tuesday_slots = Memberslot.objects.filter(Day="Tuesday").exclude(rem_num_participants="0")
+        wednesday_slots = Memberslot.objects.filter(Day="Wednesday").exclude(rem_num_participants="0")
+        thursday_slots = Memberslot.objects.filter(Day="Thursday").exclude(rem_num_participants="0")
+        saturday_slots = Memberslot.objects.filter(Day="Saturday").exclude(rem_num_participants="0")
+        friday_slots = Memberslot.objects.filter(Day="Friday").exclude(rem_num_participants="0")
+        sunday_slots = Memberslot.objects.filter(Day="Sunday").exclude(rem_num_participants="0")
+        slots = USER.slot_set.filter(type="MEMBERSLOT")
+        for idx in slots:
+            monday_slots = monday_slots.exclude(id=idx.id)
+            tuesday_slots = tuesday_slots.exclude(id=idx.id)
+            wednesday_slots = wednesday_slots.exclude(id=idx.id)
+            thursday_slots = thursday_slots.exclude(id=idx.id)
+            friday_slots = friday_slots.exclude(id=idx.id)
+            saturday_slots = saturday_slots.exclude(id=idx.id)
+            sunday_slots = sunday_slots.exclude(id=idx.id)
+        context = {
+            "slots": slots,
+            "monday_slots": monday_slots,
+            "tuesday_slots": tuesday_slots,
+            "wednesday_slots": wednesday_slots,
+            "thursday_slots": thursday_slots,
+            "friday_slots": friday_slots,
+            "saturday_slots": saturday_slots,
+            "sunday_slots": sunday_slots,
+            "USER": USER,
+        }
+        return render(request, "userPortal/availableSlots.html", context)
+    else:
+        return redirect("/login")
 
 
 def handle_uploaded_file(f, name):

@@ -8,7 +8,6 @@ from apps.partyPage.models import *
 from apps.suggestionPortal.models import *
 from apps.userPortal.models import *
 
-
 admin.site.register(Member)
 admin.site.register(NewUser)
 admin.site.register(Committee)
@@ -28,3 +27,4 @@ admin.site.register(Courseslot)
 admin.site.register(Eventslot)
 admin.site.register(Membership_form)
 admin.site.register(Message)
+admin.site.register(EventBooking)

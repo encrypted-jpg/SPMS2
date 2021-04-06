@@ -1,16 +1,14 @@
-
 (function ($) {
     "use strict";
 
 
     /*==================================================================
     [ Focus Contact2 ]*/
-    $('.input100').each(function(){
-        $(this).on('blur', function(){
-            if($(this).val().trim() != "") {
+    $('.input100').each(function () {
+        $(this).on('blur', function () {
+            if ($(this).val().trim() != "") {
                 $(this).addClass('has-val');
-            }
-            else {
+            } else {
                 $(this).removeClass('has-val');
             }
         })
@@ -24,33 +22,33 @@
     var message = $('.validate-input textarea[name="message"]');
 
 
-    $('.validate-form').on('submit',function(){
+    $('.validate-form').on('submit', function () {
         var check = true;
 
-        if($(name).val().trim() == ''){
+        if ($(name).val().trim() == '') {
             showValidate(name);
-            check=false;
+            check = false;
         }
 
 
-        if($(email).val().trim() == '') {
+        if ($(email).val().trim() == '') {
             showValidate(email);
-            check=false;
+            check = false;
         }
 
-        if($(message).val().trim() == ''){
+        if ($(message).val().trim() == '') {
             showValidate(message);
-            check=false;
+            check = false;
         }
 
         return check;
     });
 
 
-    $('.validate-form .input100').each(function(){
-        $(this).focus(function(){
-           hideValidate(this);
-       });
+    $('.validate-form .input100').each(function () {
+        $(this).focus(function () {
+            hideValidate(this);
+        });
     });
 
     function showValidate(input) {
@@ -64,7 +62,6 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
-
 
 
 })(jQuery);

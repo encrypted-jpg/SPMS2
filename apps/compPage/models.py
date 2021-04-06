@@ -1,5 +1,5 @@
-from django.db import models
 from django.core.validators import *
+from django.db import models
 
 
 # Create your models here.
@@ -27,7 +27,9 @@ class Game(models.Model):
     game_type = models.CharField("type", max_length=100, blank=False)
 
     # relationships
-    competition = models.ForeignKey(Competition, on_delete=models.CASCADE, null=True)
+    competition = models.ForeignKey(
+        Competition, on_delete=models.CASCADE, null=True, blank=True
+    )
 
 
 from mysite.models import NewUser

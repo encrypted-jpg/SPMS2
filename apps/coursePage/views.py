@@ -1,51 +1,69 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from . import templates
 from django.contrib import messages
-from .models import Course
+from django.shortcuts import render, redirect
+
 from mysite.models import *
 
 
 # Create your views here.
 
 
-def index(request):
+def index(request):  # Renders Courses Home Page
     courses = Course.objects.all()
     context = {"courses": courses}
     return render(request, "coursePage/index.html", context=context)
 
 
-def registration(request):
+def registration(request):  # Displays the Payment Page
     if request.user is not None and request.user.username is not "":
-        print(request.GET.get("duration"))
-        try:
-            User = Member.objects.get(username=request.user.username)
-        except:
-            User = NewUser.objects.get(username=request.user.username)
+        User = NewUser.objects.get(username=request.user.username)
+        if User.type == "MANAGER":  # Checks if the User is a Manager
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You are a Manager!! This Functionality is Working Properly..",
+                extra_tags="custom",
+            )
+            return redirect("/userPortal/course")
         courses = User.course.all()
-        if len(courses) > 0:
+        if len(courses) > 0:  # Checks if the User is already enrolled in a Course
             try:
                 course = courses.get(name=request.GET.get("course"))
             except:
                 course = None
             if course is None:
+                cost = (
+                    int(request.GET.get("duration"))
+                    * Course.objects.get(name=request.GET.get("course")).cost
+                )
                 return render(
                     request,
                     "coursePage/register.html",
                     {
                         "course": request.GET.get("course"),
                         "duration": request.GET.get("duration"),
+                        "cost": cost,
                     },
                 )
             else:
-                return redirect("/userPortal")
-        else:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    "You are already enrolled in this course!!",
+                    extra_tags="custom",
+                )
+                return redirect("/userPortal/course")
+        else:  # if the user is not enrolled in any course then the user is will be redirected to Payment Page
+            cost = (
+                int(request.GET.get("duration"))
+                * Course.objects.get(name=request.GET.get("course")).cost
+            )
             return render(
                 request,
                 "coursePage/register.html",
                 {
                     "course": request.GET.get("course"),
                     "duration": request.GET.get("duration"),
+                    "cost": cost,
                 },
             )
     request.session["next"] = (

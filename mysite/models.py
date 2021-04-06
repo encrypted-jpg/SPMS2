@@ -71,6 +71,7 @@ class NewUser(User):
     is_member = models.BooleanField("is_member", default="False")
     is_coordinator = models.BooleanField("is_coordinator", default="False")
     is_committee = models.BooleanField("is_committee", default="False")
+    course_last_date = models.DateField("course_last_date", default="2001-01-01")
 
     # relationships
     event = models.OneToOneField(
@@ -79,6 +80,9 @@ class NewUser(User):
     course = models.ManyToManyField(Course, blank=True)
     cert = models.FileField("cert", blank=True, null=True)
     comp_cert = models.FileField("comp_cert", blank=True, null=True)
+    course_count = models.IntegerField("course_count", default=0, null=True, blank=True)
+    comp_count = models.IntegerField("course_count", default=0, null=True, blank=True)
+    event_count = models.IntegerField("course_count", default=0, null=True, blank=True)
 
 
 class Slot(models.Model):
@@ -92,13 +96,23 @@ class Slot(models.Model):
     type = models.CharField(
         _("Type"), max_length=50, choices=Types.choices, default=Types.MEMBERSLOT
     )
+    MALE = "Male"
+    FEMALE = "Female"
+    BOTH = "Both"
+    lst = [
+        (MALE, "Only Males are allowed"),
+        (FEMALE, "Only Females are allowed"),
+        (BOTH, "Everybody is allowed"),
+    ]
+    gender = models.CharField(
+        "gender", max_length=10, blank=False, choices=lst, default=BOTH
+    )
     from_time = models.TimeField("from_time", max_length=10, blank=False)
     to_time = models.TimeField("to_time", max_length=10, blank=False)
     Date = models.DateField("date", max_length=20, blank=False)
-    Day = models.CharField("day", max_length=20, null=True, blank=True)
+    Day = models.CharField("day", max_length=20, null=True, blank=True, default="")
     rem_num_participants = models.IntegerField("rem_num_participants", default=50)
     max_num_participants = models.IntegerField("max_num_participants", default=50)
-
     # relationships
     # from compPage models.py
     competition = models.OneToOneField(
@@ -107,9 +121,7 @@ class Slot(models.Model):
     game = models.OneToOneField(Game, on_delete=models.SET_NULL, null=True, blank=True)
 
     # from coursePage models.py
-    course = models.ForeignKey(
-        Course, on_delete=models.SET_NULL, null=True, blank=True, default=None
-    )
+    course = models.ManyToManyField(Course, blank=True)
 
     # from partyPage.models
     event = models.OneToOneField(
@@ -238,6 +250,7 @@ class Member(NewUser):
 class Coordinator(NewUser):
     is_coordinator = True
     objects = CoordinatorManager()
+    is_staff = True
 
     class Meta:
         proxy = True
@@ -251,6 +264,7 @@ class Coordinator(NewUser):
 class Committee(NewUser):
     is_committee = True
     objects = CommitteeManager()
+    is_staff = True
 
     class Meta:
         proxy = True
@@ -263,6 +277,7 @@ class Committee(NewUser):
 
 class Manager(NewUser):
     is_superuser = True
+    is_staff = True
     objects = ManagerManager()
 
     class Meta:
@@ -278,4 +293,5 @@ class Message(models.Model):
     head = models.CharField(max_length=30, default="", blank=True, null=True)
     Description = models.CharField(max_length=100, default="", blank=True, null=True)
     users = models.ManyToManyField(NewUser)
+    Date = models.DateField("Date", blank=False, default="2001-01-01")
     url = models.URLField(default="#", blank=True, null=True)

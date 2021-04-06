@@ -1,13 +1,15 @@
+from datetime import date
+
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from . import templates
-from .models import Competition, Game, Ticket
+from .models import *
 from mysite.models import *
-from datetime import date, datetime
 
 
 # Create your views here.
-def compute_comp(id):
+def compute_comp(
+    id,
+):  # It computes the from_age and to_age of a Competition based on the games in it
     comp = Competition.objects.get(id=id)
     low = 100
     high = 0
@@ -20,7 +22,7 @@ def compute_comp(id):
     comp.to_age = high
 
 
-def calculateAge(birthDate):
+def calculateAge(birthDate):  # Returns the Age from DOB
     today = date.today()
     age = (
         today.year
@@ -30,7 +32,9 @@ def calculateAge(birthDate):
     return age
 
 
-def index(request):
+def index(
+    request,
+):  # Returns the Competition list and games list to display in the site
     comp = Competition.objects.all()
     lst = []
     for x in comp:
@@ -52,6 +56,17 @@ def index(request):
 
 def participate(request):
     if request.user is not None and request.user.username is not "":
+        user = NewUser.objects.filter(username=request.user.username)[0]
+        if (
+            user.type == "MANAGER"
+        ):  # Redirects to Manager Competition page if the User is a Manager
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You are a Manager!! This Functionality is Working Properly..",
+                extra_tags="custom",
+            )
+            return redirect("/userPortal/comp/")
         if request.method == "POST":
             id = request.session["comp_id"]
             del request.session["comp_id"]
@@ -65,19 +80,36 @@ def participate(request):
                     gslot.rem_num_participants -= 1
                     gslot.save()
             user.comp_participated += 1
-            user.comp_cert = request.FILES["cert"]
+            user.comp_cert = request.FILES[
+                "cert"
+            ]  # Retrieves Data from the form and enrolls the user in the
+            user.comp_count += 1  # Corresponding Games
             user.save()
-            return redirect("/userPortal")
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You are successfully enrolled in the competition " + comp.name,
+                extra_tags="custom",
+            )
+            return redirect("/userPortal/comp/")
         if request.method == "GET" and request.GET.get("comp") is not None:
             comp = Competition.objects.filter(id=request.GET.get("comp"))[0]
             user = NewUser.objects.filter(username=request.user.username)[0]
             for game in comp.game_set.all():
-                if user in Gameslot.objects.filter(game=game)[0].users.all():
-                    return redirect("/userPortal")
+                if (
+                    user in Gameslot.objects.filter(game=game)[0].users.all()
+                ):  # Checks for Enrollment Status
+                    messages.add_message(
+                        request,
+                        messages.INFO,
+                        "You are already enrolled in the competition " + comp.name,
+                        extra_tags="custom",
+                    )
+                    return redirect("/userPortal/comp")
             lst = []
             compute_comp(comp.id)
             age = calculateAge(user.age)
-            for x in comp.game_set.all():
+            for x in comp.game_set.all():  # Applying Gender Filter
                 if (
                     x.gender == "Both"
                     or x.gender
@@ -100,12 +132,23 @@ def participate(request):
 
 def ticket(request):
     if request.user is not None and request.user.username is not "":
+        user = NewUser.objects.filter(username=request.user.username)[0]
+        if user.type == "MANAGER":  # Check if the User is a Manager
+            messages.add_message(
+                request,
+                messages.INFO,
+                "You are a Manager!! This Functionality is Working Properly..",
+                extra_tags="custom",
+            )
+            return redirect("/userPortal/comp")
         if request.method == "POST":
             id = request.session["comp_id"]
             del request.session["comp_id"]
             User = NewUser.objects.filter(username=request.user.username)[0]
             comp = Competition.objects.filter(id=id)[0]
-            tkt = Ticket(num_tickets=request.POST.get("num"))
+            tkt = Ticket(
+                num_tickets=request.POST.get("num")
+            )  # Add a Ticket to the User
             tkt.save()
             tkt.user.add(User)
             tkt.competition.add(comp)
@@ -113,14 +156,20 @@ def ticket(request):
             cslot = Compslot.objects.filter(competition=comp)[0]
             cslot.users.add(User)
             cslot.save()
-            return redirect("/userPortal")
+            messages.add_message(
+                request,
+                messages.INFO,
+                "A ticket is successfully booked!!",
+                extra_tags="custom",
+            )
+            return redirect("/userPortal/comp")
         if request.method == "GET":
             comp = Competition.objects.filter(id=request.GET.get("comp"))[0]
             try:
                 User = NewUser.objects.filter(username=request.user.username)[0]
             except:
                 User = NewUser.objects.filter(username=request.user.username)[0]
-            id = comp.id
+            id = comp.id  # Checking if the User has already a Ticket
             if (
                 len(
                     Ticket.objects.filter(
@@ -129,7 +178,13 @@ def ticket(request):
                 )
                 > 0
             ):
-                return redirect("/userPortal")
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    "You Already have a Ticket for the competition " + comp.name,
+                    extra_tags="custom",
+                )
+                return redirect("/userPortal/comp")
             context = {"comp_name": comp.name}
             request.session["comp_id"] = comp.id
             return render(request, "compPage/ticket.html", context=context)

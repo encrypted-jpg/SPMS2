@@ -1,0 +1,187 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <title></title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        body {
+            background: linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%);
+            font-family: 'Roboto', sans-serif
+        }
+
+        .navbar .nav-link {
+            font-size: 16px;
+        }
+
+        .card {
+            border: none;
+            max-width: 450px;
+            border-radius: 15px;
+            margin: 150px 0 150px;
+            padding: 35px;
+            padding-bottom: 20px !important
+        }
+
+        .heading {
+            color: #C1C1C1;
+            font-size: 18px;
+            font-weight: bolder;
+        }
+
+        img {
+            transform: translate(160px, -10px)
+        }
+
+        img:hover {
+            cursor: pointer
+        }
+
+        .text-warning {
+            font-size: 12px;
+            font-weight: 500;
+            color: #edb537 !important
+        }
+
+        #cno {
+            transform: translateY(-10px)
+        }
+
+        input {
+            border-bottom: 1.5px solid #E8E5D2 !important;
+            font-weight: bold;
+            border-radius: 0;
+            border: 0
+        }
+
+        .form-group input:focus {
+            border: 0;
+            outline: 0
+        }
+
+        .col-sm-5 {
+            padding-left: 90px
+        }
+
+        .btn {
+            background: #F3A002 !important;
+            border: none;
+            border-radius: 30px
+        }
+
+        .btn:focus {
+            box-shadow: none
+        }
+        .cost {
+            color: #625959;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/">SPMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/coursePage">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/compPage">Competitions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/partyPage">Organise Party</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/suggestionPortal">Suggestions</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav nav justify-content-end">
+            <li class="nav-item">
+                {% if request.user != null and request.user.username != "" %}
+                    <a class="nav-link" aria-current="page" href="/login/logout">Logout</a>
+                {% else %}
+                    <a class="nav-link" aria-current="page" href="/login">Login</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if request.user != null and request.user.username != "" %}
+                    <a class="nav-link" aria-current="page" href="/userPortal">Hello, {{ request.user.username }}</a>
+                {% else %}
+                    <a class="nav-link" aria-current="page" href="/signUp">Sign-Up</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>   <!-- navbar ends -->
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12">
+            <div class="card mx-auto">
+                <p class="heading">PAYMENT DETAILS</p>
+                <p class="cost">COST = {{ cost }} INR</p>
+                <form class="card-details ">
+                    <div class="form-group mb-0">
+                        <p class="text-warning mb-0">Card Number</p> <input type="text" name="card-num"
+                                                                            placeholder="1234 5678 9012 3457" size="17"
+                                                                            id="cno" minlength="19" maxlength="19"> <img
+                            src="https://img.icons8.com/color/48/000000/visa.png" width="64px" height="60px"/>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-warning mb-0">Cardholder's Name</p> <input type="text" name="name"
+                                                                                  placeholder="Name" size="17">
+                    </div>
+                    <div class="form-group pt-2">
+                        <div class="row d-flex">
+                            <div class="col-sm-4">
+                                <p class="text-warning mb-0">Expiration</p> <input type="text" name="exp"
+                                                                                   placeholder="MM/YYYY" size="7"
+                                                                                   id="exp" minlength="7" maxlength="7">
+                            </div>
+                            <div class="col-sm-3">
+                                <p class="text-warning mb-0">Cvv</p> <input type="password" name="cvv"
+                                                                            placeholder="&#9679;&#9679;&#9679;" size="1"
+                                                                            minlength="3" maxlength="3">
+                            </div>
+                            <div class="col-sm-5 pt-0"><a href="/partyPage/register/?date={{ date }}&done=1">
+                                <button type="button" class="btn btn-primary"><i
+                                        class="fas fa-arrow-right px-3 py-2"></i></button>
+                            </a></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -13,12 +13,7 @@ class Feedback(models.Model):
     reply = models.CharField(
         "reply", max_length=500, default="Thanks for your feedback"
     )
-    is_read = models.BooleanField(default=False)
-    # relationships
-    # from mysite.models
-    member = models.ManyToManyField(Member, related_name="member")
-    nonmember = models.ManyToManyField(NewUser, related_name="nonmember")
-    coordinators = models.ManyToManyField(
-        Coordinator, related_name="coordinators", blank=True
-    )
-    is_manager = models.BooleanField(default=False)
+    replied = models.BooleanField("replied", default=False)
+    user = models.ManyToManyField(NewUser, related_name="user")
+    persons = models.ManyToManyField(NewUser, related_name="persons", blank=True)
+    date = models.DateField("date", blank=True, null=True)
